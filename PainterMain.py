@@ -49,14 +49,12 @@ class Paint(object):
 
     def draw_confidence(self, confidence_tensor):
         out = "0\t1\t2\t3\t4\t5\t6\t7\t8\t9\n"
-        print(type(confidence_tensor))
         for i in range(10):
             
             out = out+str(int(confidence_tensor[0][i].item() * 100))+"%\t"
         self.conf['text'] = out
 
     def clear(self):
-        print("reset")
         self.c.delete("all")
         self.draw_confidence(torch.zeros([1, 10], dtype=torch.int32))
 

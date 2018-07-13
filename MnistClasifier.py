@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import PIL.Image as Image
 from torch.autograd import Variable
+
 MODEL_PATH = 'model_mnist.tar'
 
 class Unbuffered(object):
@@ -78,7 +79,7 @@ def imshow(img):
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
-def train():
+def train(epochs):
     print("Training")
 
     trainset = torchvision.datasets.MNIST(root='./data', train=True,
@@ -100,7 +101,7 @@ def train():
     import torch.optim as optim
     optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
     loss_list = list()
-    for epoch in range(2):  # loop over the dataset multiple times
+    for epoch in range(epochs):  # loop over the dataset multiple times
         print("Epoch ", epoch)
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
@@ -120,8 +121,8 @@ def train():
             if i % 1000 == 999:    # print every 1000 mini-batches
                 print('[%d, %5d] loss: %.3f' %
                     (epoch + 1, i + 1, running_loss / 2000))
-                running_loss = 0.0
                 loss_list.append(running_loss)
+                running_loss = 0.0
 
     plt.plot(loss_list)
     plt.show()
@@ -143,10 +144,14 @@ def recognize(image):
 
     return (best, confidence)
 
-
+import sys
+	
 def main():
-    # train()
-    recognize("test.jpg")
+	if len(sys.argv) > 1 :
+		train(int(sys.argv[1]))
+	else :
+		print("No epoch param selected")
+    
 
 
 if __name__ == '__main__':

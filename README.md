@@ -1,3 +1,3 @@
 # MNIST-pytorch
 
-To retrain call **train** from MnistClassifier.py ;)
+To retrain run from MnistClassifier.py with number of epochs as arg
